@@ -5,7 +5,7 @@ if (tg) {
   tg.expand();
 }
 
-const API_URL = "https://telegram-music-bot-production.up.railway.app/search"; // ⚠️ заменим ниже
+const API_URL = "https://telegram-music-bot-production-6e89.up.railway.app/search"; // ⚠️ заменим ниже
 
 const MAIN_BOT_URL = "https://t.me/otgmusicbot";
 const TIKTOK_URL = "https://www.tiktok.com/@alexey_pv_";
