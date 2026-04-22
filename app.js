@@ -61,13 +61,12 @@ function renderTracks(tracks) {
 
   tracks.forEach((track) => {
     const card = document.createElement("div");
-    card.className = "placeholder-card";
-    card.style.textAlign = "left";
+    card.className = "result-card";
 
     card.innerHTML = `
-      <h3 style="margin-bottom:8px;">${track.title}</h3>
-      <p style="margin-bottom:14px;">${track.artist}</p>
-      <audio controls preload="none" style="width:100%;">
+      <h3>${track.title}</h3>
+      <p>${track.artist}</p>
+      <audio controls preload="none">
         <source src="${track.preview_url}" type="audio/mpeg" />
       </audio>
     `;
@@ -109,61 +108,26 @@ async function runMusicSearch(query) {
   }
 }
 
-if (openMusicBtn) {
-  openMusicBtn.addEventListener("click", () => {
-    showScreen(musicScreen);
+openMusicBtn?.addEventListener("click", () => showScreen(musicScreen));
+openClipsBtn?.addEventListener("click", () => showScreen(clipsScreen));
+openSongBtn?.addEventListener("click", () => showScreen(songScreen));
+openLiveBtn?.addEventListener("click", () => openExternal(TIKTOK_URL));
+
+backFromMusic?.addEventListener("click", () => showScreen(homeScreen));
+backFromClips?.addEventListener("click", () => showScreen(homeScreen));
+backFromSong?.addEventListener("click", () => showScreen(homeScreen));
+
+openMainBotBtn?.addEventListener("click", () => openTelegramLink(MAIN_BOT_URL));
+
+musicSearchForm?.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  await runMusicSearch(musicQuery.value);
+});
+
+tagButtons.forEach((button) => {
+  button.addEventListener("click", async () => {
+    const query = button.dataset.query || "";
+    musicQuery.value = query;
+    await runMusicSearch(query);
   });
-}
-
-if (openClipsBtn) {
-  openClipsBtn.addEventListener("click", () => {
-    showScreen(clipsScreen);
-  });
-}
-
-if (openSongBtn) {
-  openSongBtn.addEventListener("click", () => {
-    showScreen(songScreen);
-  });
-}
-
-if (openLiveBtn) {
-  openLiveBtn.addEventListener("click", () => {
-    openExternal(TIKTOK_URL);
-  });
-}
-
-if (backFromMusic) {
-  backFromMusic.addEventListener("click", () => showScreen(homeScreen));
-}
-
-if (backFromClips) {
-  backFromClips.addEventListener("click", () => showScreen(homeScreen));
-}
-
-if (backFromSong) {
-  backFromSong.addEventListener("click", () => showScreen(homeScreen));
-}
-
-if (openMainBotBtn) {
-  openMainBotBtn.addEventListener("click", () => {
-    openTelegramLink(MAIN_BOT_URL);
-  });
-}
-
-if (musicSearchForm) {
-  musicSearchForm.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    await runMusicSearch(musicQuery.value);
-  });
-}
-
-if (tagButtons.length) {
-  tagButtons.forEach((button) => {
-    button.addEventListener("click", async () => {
-      const query = button.dataset.query || "";
-      musicQuery.value = query;
-      await runMusicSearch(query);
-    });
-  });
-}
+});

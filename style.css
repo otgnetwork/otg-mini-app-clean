@@ -15,12 +15,9 @@
   --radius-lg: 22px;
 }
 
-* {
-  box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
-html,
-body {
+html, body {
   margin: 0;
   min-height: 100%;
   font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -31,9 +28,7 @@ body {
   color: var(--text);
 }
 
-body {
-  min-height: 100vh;
-}
+body { min-height: 100vh; }
 
 .app-shell {
   max-width: 520px;
@@ -42,9 +37,7 @@ body {
   padding: 18px 14px 28px;
 }
 
-.topbar {
-  margin-bottom: 18px;
-}
+.topbar { margin-bottom: 18px; }
 
 .brand {
   display: flex;
@@ -82,13 +75,8 @@ body {
   font-size: 14px;
 }
 
-.screen {
-  display: none;
-}
-
-.screen.active {
-  display: block;
-}
+.screen { display: none; }
+.screen.active { display: block; }
 
 .hero-card {
   padding: 26px 22px;
@@ -139,7 +127,8 @@ body {
 .menu-card,
 .placeholder-card,
 .search-box,
-.status-box {
+.status-box,
+.result-card {
   background: var(--panel);
   border: 1px solid var(--line);
   box-shadow: var(--shadow);
@@ -225,9 +214,7 @@ body {
   font-size: 16px;
 }
 
-.search-box input::placeholder {
-  color: #95a1c3;
-}
+.search-box input::placeholder { color: #95a1c3; }
 
 .search-box button,
 .primary-btn,
@@ -276,6 +263,26 @@ body {
   gap: 14px;
 }
 
+.result-card {
+  border-radius: 22px;
+  padding: 18px;
+}
+
+.result-card h3 {
+  margin: 0 0 8px;
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.result-card p {
+  margin: 0 0 14px;
+  color: var(--muted);
+}
+
+.result-card audio {
+  width: 100%;
+}
+
 .placeholder-card {
   border-radius: 24px;
   padding: 24px 18px;
@@ -306,23 +313,9 @@ body {
 }
 
 @media (max-width: 520px) {
-  .app-shell {
-    padding: 14px 10px 22px;
-  }
-
-  .hero-card h2 {
-    font-size: 28px;
-  }
-
-  .brand-text h1 {
-    font-size: 22px;
-  }
-
-  .search-box {
-    flex-direction: column;
-  }
-
-  .search-box button {
-    height: 48px;
-  }
+  .app-shell { padding: 14px 10px 22px; }
+  .hero-card h2 { font-size: 28px; }
+  .brand-text h1 { font-size: 22px; }
+  .search-box { flex-direction: column; }
+  .search-box button { height: 48px; }
 }
