@@ -95,7 +95,7 @@ musicSearchForm.addEventListener("submit", async (e) => {
       el.innerHTML = `
         <strong>${track.title}</strong><br>
         ${track.artist}<br>
-        <audio controls src="${track.preview}"></audio>
+        <audio controls src="${track.preview_url}"></audio>
       `;
 
       musicResults.appendChild(el);
