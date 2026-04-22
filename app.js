@@ -5,6 +5,8 @@ if (tg) {
   tg.expand();
 }
 
+const API_URL = "https://telegram-music-bot-production.up.railway.app/search"; // ⚠️ заменим ниже
+
 const MAIN_BOT_URL = "https://t.me/otgmusicbot";
 const TIKTOK_URL = "https://www.tiktok.com/@alexey_pv_";
 
@@ -23,62 +25,83 @@ const backFromClips = document.getElementById("backFromClips");
 const backFromSong = document.getElementById("backFromSong");
 
 const openMainBotBtn = document.getElementById("openMainBotBtn");
-const tagButtons = document.querySelectorAll(".tag-btn");
+
+const musicSearchForm = document.getElementById("musicSearchForm");
 const musicQuery = document.getElementById("musicQuery");
 const musicStatus = document.getElementById("musicStatus");
+const musicResults = document.getElementById("musicResults");
 
 function showScreen(screen) {
   [homeScreen, musicScreen, clipsScreen, songScreen].forEach((item) => {
     item.classList.remove("active");
   });
   screen.classList.add("active");
-  window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
 function openTelegramLink(url) {
-  if (tg && typeof tg.openTelegramLink === "function") {
+  if (tg && tg.openTelegramLink) {
     tg.openTelegramLink(url);
-    return;
+  } else {
+    window.open(url, "_blank");
   }
-  window.open(url, "_blank");
 }
 
 function openExternal(url) {
-  if (tg && typeof tg.openLink === "function") {
+  if (tg && tg.openLink) {
     tg.openLink(url);
-    return;
+  } else {
+    window.open(url, "_blank");
   }
-  window.open(url, "_blank");
 }
 
-openMusicBtn.addEventListener("click", () => {
-  showScreen(musicScreen);
-  musicStatus.textContent = "Скоро здесь будет живой поиск музыки.";
-});
+openMusicBtn.onclick = () => showScreen(musicScreen);
+openClipsBtn.onclick = () => showScreen(clipsScreen);
+openSongBtn.onclick = () => showScreen(songScreen);
+openLiveBtn.onclick = () => openExternal(TIKTOK_URL);
 
-openClipsBtn.addEventListener("click", () => {
-  showScreen(clipsScreen);
-});
+backFromMusic.onclick = () => showScreen(homeScreen);
+backFromClips.onclick = () => showScreen(homeScreen);
+backFromSong.onclick = () => showScreen(homeScreen);
 
-openSongBtn.addEventListener("click", () => {
-  showScreen(songScreen);
-});
+openMainBotBtn.onclick = () => openTelegramLink(MAIN_BOT_URL);
 
-openLiveBtn.addEventListener("click", () => {
-  openExternal(TIKTOK_URL);
-});
+musicSearchForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
 
-backFromMusic.addEventListener("click", () => showScreen(homeScreen));
-backFromClips.addEventListener("click", () => showScreen(homeScreen));
-backFromSong.addEventListener("click", () => showScreen(homeScreen));
+  const query = musicQuery.value.trim();
+  if (!query) return;
 
-openMainBotBtn.addEventListener("click", () => {
-  openTelegramLink(MAIN_BOT_URL);
-});
+  musicStatus.textContent = "Ищем...";
+  musicResults.innerHTML = "";
 
-tagButtons.forEach((button) => {
-  button.addEventListener("click", () => {
-    musicQuery.value = button.dataset.query || "";
-    musicStatus.textContent = `Запрос "${musicQuery.value}" готов. Следующим шагом подключим живой поиск.`;
-  });
+  try {
+    const res = await fetch(API_URL + "?q=" + encodeURIComponent(query));
+    const data = await res.json();
+
+    if (!data.length) {
+      musicStatus.textContent = "Ничего не найдено";
+      return;
+    }
+
+    musicStatus.textContent = "Результаты:";
+
+    data.forEach(track => {
+      const el = document.createElement("div");
+      el.style.padding = "12px";
+      el.style.border = "1px solid rgba(255,255,255,0.1)";
+      el.style.borderRadius = "12px";
+      el.style.marginBottom = "10px";
+
+      el.innerHTML = `
+        <strong>${track.title}</strong><br>
+        ${track.artist}<br>
+        <audio controls src="${track.preview}"></audio>
+      `;
+
+      musicResults.appendChild(el);
+    });
+
+  } catch (err) {
+    musicStatus.textContent = "Ошибка подключения к серверу";
+  }
 });
