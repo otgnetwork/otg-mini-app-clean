@@ -19,6 +19,8 @@
     </header>
 
     <main class="app-main">
+
+      <!-- HOME -->
       <section class="screen active" id="homeScreen">
         <div class="hero-card">
           <div class="hero-logo">OTG</div>
@@ -27,94 +29,65 @@
         </div>
 
         <div class="menu-grid">
-          <button class="menu-card" id="openMusicBtn" type="button">
-            <span class="menu-icon">🎵</span>
-            <span class="menu-title">Найти музыку</span>
-            <span class="menu-desc">Ищи треки и слушай превью</span>
+          <button class="menu-card" id="openMusicBtn">
+            🎵 Найти музыку
           </button>
 
-          <button class="menu-card" id="openClipsBtn" type="button">
-            <span class="menu-icon">🎬</span>
-            <span class="menu-title">Найти клипы</span>
-            <span class="menu-desc">Раздел подключим следующим шагом</span>
+          <button class="menu-card" id="openClipsBtn">
+            🎬 Найти клипы
           </button>
 
-          <button class="menu-card" id="openSongBtn" type="button">
-            <span class="menu-icon">✨</span>
-            <span class="menu-title">Заказать песню</span>
-            <span class="menu-desc">Быстрый переход в основной бот</span>
+          <button class="menu-card" id="openSongBtn">
+            ✨ Заказать песню
           </button>
 
-          <button class="menu-card" id="openLiveBtn" type="button">
-            <span class="menu-icon">🔴</span>
-            <span class="menu-title">Live</span>
-            <span class="menu-desc">Перейти в TikTok эфир</span>
+          <button class="menu-card" id="openLiveBtn">
+            🔴 Live
           </button>
         </div>
       </section>
 
+      <!-- MUSIC -->
       <section class="screen" id="musicScreen">
-        <div class="section-head">
-          <button class="back-btn" id="backFromMusic" type="button">← Назад</button>
-          <div>
-            <h2>Найти музыку</h2>
-            <p>Введи трек или исполнителя</p>
-          </div>
-        </div>
+        <button id="backFromMusic">← Назад</button>
 
-        <form class="search-box" id="musicSearchForm">
-          <input
-            id="musicQuery"
-            type="text"
-            placeholder="Например: Eminem"
-            autocomplete="off"
-          />
-          <button id="musicSubmitBtn" type="submit">Искать</button>
+        <h2>Найти музыку</h2>
+
+        <form id="musicSearchForm">
+          <input id="musicQuery" placeholder="Eminem" />
+          <button type="submit">Искать</button>
         </form>
 
-        <div class="quick-tags">
-          <button class="tag-btn" type="button" data-query="Eminem">Eminem</button>
-          <button class="tag-btn" type="button" data-query="The Weeknd">The Weeknd</button>
-          <button class="tag-btn" type="button" data-query="NILETTO">NILETTO</button>
-          <button class="tag-btn" type="button" data-query="Billie Eilish">Billie Eilish</button>
-        </div>
-
-        <div class="status-box" id="musicStatus">Введите запрос и нажмите “Искать”.</div>
-        <div class="results-list" id="musicResults"></div>
+        <div id="musicStatus"></div>
+        <div id="musicResults"></div>
       </section>
 
+      <!-- CLIPS -->
       <section class="screen" id="clipsScreen">
-        <div class="section-head">
-          <button class="back-btn" id="backFromClips" type="button">← Назад</button>
-          <div>
-            <h2>Найти клипы</h2>
-            <p>Раздел подключим следующим шагом</p>
-          </div>
-        </div>
+        <button id="backFromClips">← Назад</button>
 
-        <div class="placeholder-card">
-          <div class="placeholder-icon">🎬</div>
-          <h3>Клипы скоро здесь</h3>
-          <p>Сначала добиваем музыку. Потом подключим поиск клипов.</p>
-        </div>
+        <h2>Найти клипы</h2>
+
+        <form id="clipsSearchForm">
+          <input id="clipsQuery" placeholder="Eminem Lose Yourself" />
+          <button type="submit">Искать</button>
+        </form>
+
+        <div id="clipsStatus"></div>
+        <div id="clipsResults"></div>
       </section>
 
+      <!-- SONG -->
       <section class="screen" id="songScreen">
-        <div class="section-head">
-          <button class="back-btn" id="backFromSong" type="button">← Назад</button>
-          <div>
-            <h2>Заказать песню</h2>
-            <p>Быстрый переход в основной бот</p>
-          </div>
-        </div>
+        <button id="backFromSong">← Назад</button>
 
-        <div class="placeholder-card">
-          <div class="placeholder-icon">✨</div>
-          <h3>Персональная песня под заказ</h3>
-          <p>Открой основной бот и отправь заявку с деталями песни.</p>
-          <button class="primary-btn" id="openMainBotBtn" type="button">Открыть @otgmusicbot</button>
-        </div>
+        <h2>Заказать песню</h2>
+
+        <button id="openMainBotBtn">
+          Открыть @otgmusicbot
+        </button>
       </section>
+
     </main>
   </div>
 
