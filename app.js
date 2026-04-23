@@ -79,11 +79,21 @@ window.addEventListener("DOMContentLoaded", () => {
   const prevBtn = document.getElementById("prev");
   const nextBtn = document.getElementById("next");
 
+  function hidePlayer() {
+    audio.pause();
+    player.style.display = "none";
+  }
+
   function showScreen(screen) {
     [homeScreen, musicScreen, clipsScreen, songScreen].forEach((item) => {
       if (item) item.classList.remove("active");
     });
     if (screen) screen.classList.add("active");
+
+    if (screen !== musicScreen) {
+      hidePlayer();
+    }
+
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
@@ -145,6 +155,7 @@ window.addEventListener("DOMContentLoaded", () => {
     if (currentIndex < 0) return;
     if (audio.paused) {
       audio.play().catch(console.error);
+      player.style.display = "flex";
     } else {
       audio.pause();
     }
