@@ -11,6 +11,7 @@ window.addEventListener("DOMContentLoaded", () => {
   }
 
   const API_URL = "/api/search";
+  const ORDER_API_URL = "/api/song-order";
   const MAIN_BOT_URL = "https://t.me/otgmusicbot";
   const TIKTOK_URL = "https://www.tiktok.com/@alexey_pv_/";
 
@@ -41,6 +42,21 @@ window.addEventListener("DOMContentLoaded", () => {
   const clipsStatus = document.getElementById("clipsStatus");
   const clipsResults = document.getElementById("clipsResults");
   const clipTagButtons = document.querySelectorAll(".clip-tag-btn");
+
+  const songOrderForm = document.getElementById("songOrderForm");
+  const orderClientName = document.getElementById("orderClientName");
+  const orderTelegram = document.getElementById("orderTelegram");
+  const orderPhone = document.getElementById("orderPhone");
+  const orderPreferredContact = document.getElementById("orderPreferredContact");
+  const orderSongType = document.getElementById("orderSongType");
+  const orderOccasion = document.getElementById("orderOccasion");
+  const orderMood = document.getElementById("orderMood");
+  const orderReferences = document.getElementById("orderReferences");
+  const orderLanguage = document.getElementById("orderLanguage");
+  const orderDeadline = document.getElementById("orderDeadline");
+  const orderBudget = document.getElementById("orderBudget");
+  const orderDetails = document.getElementById("orderDetails");
+  const orderStatus = document.getElementById("orderStatus");
 
   let tracks = [];
   let currentIndex = -1;
@@ -284,6 +300,72 @@ window.addEventListener("DOMContentLoaded", () => {
     renderClipLinks(query);
   }
 
+  async function submitSongOrder(e) {
+    e.preventDefault();
+
+    const payload = {
+      client_name: orderClientName.value.trim(),
+      telegram_username: orderTelegram.value.trim(),
+      phone: orderPhone.value.trim(),
+      preferred_contact: orderPreferredContact.value,
+      song_type: orderSongType.value,
+      occasion: orderOccasion.value.trim(),
+      mood_style: orderMood.value.trim(),
+      references: orderReferences.value.trim(),
+      language: orderLanguage.value,
+      deadline: orderDeadline.value.trim(),
+      budget: orderBudget.value.trim(),
+      details: orderDetails.value.trim(),
+    };
+
+    if (!payload.client_name || !payload.details) {
+      orderStatus.innerText = "Заполни имя и подробное ТЗ.";
+      return;
+    }
+
+    if (!payload.telegram_username && !payload.phone) {
+      orderStatus.innerText = "Оставь Telegram или телефон для связи.";
+      return;
+    }
+
+    orderStatus.innerText = "Отправляем заказ менеджеру...";
+
+    try {
+      const res = await fetch(ORDER_API_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.detail || "Order request failed");
+      }
+
+      orderStatus.innerText = `✅ Заказ отправлен. ID: ${data.order_id}`;
+      songOrderForm.reset();
+    } catch (error) {
+      console.error(error);
+      orderStatus.innerText = "❌ Не удалось отправить заказ. Попробуй ещё раз.";
+    }
+  }
+
+  if (tg?.initDataUnsafe?.user) {
+    const user = tg.initDataUnsafe.user;
+    const fullName = [user.first_name, user.last_name].filter(Boolean).join(" ").trim();
+
+    if (fullName && orderClientName && !orderClientName.value) {
+      orderClientName.value = fullName;
+    }
+
+    if (user.username && orderTelegram && !orderTelegram.value) {
+      orderTelegram.value = `@${user.username}`;
+    }
+  }
+
   openMusicBtn?.addEventListener("click", () => showScreen(musicScreen));
   openClipsBtn?.addEventListener("click", () => showScreen(clipsScreen));
   openSongBtn?.addEventListener("click", () => showScreen(songScreen));
@@ -304,6 +386,8 @@ window.addEventListener("DOMContentLoaded", () => {
     e.preventDefault();
     searchClips(clipsQuery.value);
   });
+
+  songOrderForm?.addEventListener("submit", submitSongOrder);
 
   tagButtons.forEach((button) => {
     button.addEventListener("click", () => {

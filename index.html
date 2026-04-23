@@ -19,8 +19,6 @@
     </header>
 
     <main class="app-main">
-
-      <!-- HOME -->
       <section class="screen active" id="homeScreen">
         <div class="hero-card">
           <div class="hero-logo">OTG</div>
@@ -29,65 +27,158 @@
         </div>
 
         <div class="menu-grid">
-          <button class="menu-card" id="openMusicBtn">
-            🎵 Найти музыку
+          <button class="menu-card" id="openMusicBtn" type="button">
+            <span class="menu-icon">🎵</span>
+            <span class="menu-title">Найти музыку</span>
+            <span class="menu-desc">Ищи треки и слушай превью</span>
           </button>
 
-          <button class="menu-card" id="openClipsBtn">
-            🎬 Найти клипы
+          <button class="menu-card" id="openClipsBtn" type="button">
+            <span class="menu-icon">🎬</span>
+            <span class="menu-title">Найти клипы</span>
+            <span class="menu-desc">Поиск клипов и переход на YouTube</span>
           </button>
 
-          <button class="menu-card" id="openSongBtn">
-            ✨ Заказать песню
+          <button class="menu-card" id="openSongBtn" type="button">
+            <span class="menu-icon">✨</span>
+            <span class="menu-title">Заказать песню</span>
+            <span class="menu-desc">Оставь бриф для менеджера</span>
           </button>
 
-          <button class="menu-card" id="openLiveBtn">
-            🔴 Live
+          <button class="menu-card" id="openLiveBtn" type="button">
+            <span class="menu-icon">🔴</span>
+            <span class="menu-title">Live</span>
+            <span class="menu-desc">Перейти в TikTok эфир</span>
           </button>
         </div>
       </section>
 
-      <!-- MUSIC -->
       <section class="screen" id="musicScreen">
-        <button id="backFromMusic">← Назад</button>
+        <div class="section-head">
+          <button class="back-btn" id="backFromMusic" type="button">← Назад</button>
+          <div>
+            <h2>Найти музыку</h2>
+            <p>Введи трек или исполнителя</p>
+          </div>
+        </div>
 
-        <h2>Найти музыку</h2>
-
-        <form id="musicSearchForm">
-          <input id="musicQuery" placeholder="Eminem" />
-          <button type="submit">Искать</button>
+        <form class="search-box" id="musicSearchForm">
+          <input id="musicQuery" type="text" placeholder="Например: Eminem" autocomplete="off" />
+          <button id="musicSubmitBtn" type="submit">Искать</button>
         </form>
 
-        <div id="musicStatus"></div>
-        <div id="musicResults"></div>
+        <div class="quick-tags">
+          <button class="tag-btn" type="button" data-query="Eminem">Eminem</button>
+          <button class="tag-btn" type="button" data-query="The Weeknd">The Weeknd</button>
+          <button class="tag-btn" type="button" data-query="NILETTO">NILETTO</button>
+          <button class="tag-btn" type="button" data-query="Billie Eilish">Billie Eilish</button>
+        </div>
+
+        <div class="status-box" id="musicStatus">Введите запрос и нажмите “Искать”.</div>
+        <div class="results-list" id="musicResults"></div>
       </section>
 
-      <!-- CLIPS -->
       <section class="screen" id="clipsScreen">
-        <button id="backFromClips">← Назад</button>
+        <div class="section-head">
+          <button class="back-btn" id="backFromClips" type="button">← Назад</button>
+          <div>
+            <h2>Найти клипы</h2>
+            <p>Ищи клипы и открывай YouTube</p>
+          </div>
+        </div>
 
-        <h2>Найти клипы</h2>
-
-        <form id="clipsSearchForm">
-          <input id="clipsQuery" placeholder="Eminem Lose Yourself" />
-          <button type="submit">Искать</button>
+        <form class="search-box" id="clipsSearchForm">
+          <input id="clipsQuery" type="text" placeholder="Например: Eminem Lose Yourself" autocomplete="off" />
+          <button id="clipsSubmitBtn" type="submit">Искать</button>
         </form>
 
-        <div id="clipsStatus"></div>
-        <div id="clipsResults"></div>
+        <div class="quick-tags">
+          <button class="clip-tag-btn" type="button" data-query="Eminem Lose Yourself">Eminem</button>
+          <button class="clip-tag-btn" type="button" data-query="The Weeknd Starboy">The Weeknd</button>
+          <button class="clip-tag-btn" type="button" data-query="Billie Eilish bad guy">Billie Eilish</button>
+          <button class="clip-tag-btn" type="button" data-query="NILETTO Любимка">NILETTO</button>
+        </div>
+
+        <div class="status-box" id="clipsStatus">Введите трек или исполнителя и нажмите “Искать”.</div>
+        <div class="results-list" id="clipsResults"></div>
       </section>
 
-      <!-- SONG -->
       <section class="screen" id="songScreen">
-        <button id="backFromSong">← Назад</button>
+        <div class="section-head">
+          <button class="back-btn" id="backFromSong" type="button">← Назад</button>
+          <div>
+            <h2>Заказать песню</h2>
+            <p>Заполни подробный бриф, и менеджер свяжется с тобой</p>
+          </div>
+        </div>
 
-        <h2>Заказать песню</h2>
+        <form id="songOrderForm" class="results-list">
+          <div class="result-card">
+            <h3>Контакты</h3>
+            <p>Оставь данные для связи</p>
+            <input id="orderClientName" type="text" placeholder="Твоё имя *" />
+            <br /><br />
+            <input id="orderTelegram" type="text" placeholder="@telegram_username" />
+            <br /><br />
+            <input id="orderPhone" type="text" placeholder="Телефон / WhatsApp / Telegram" />
+            <br /><br />
+            <select id="orderPreferredContact">
+              <option value="">Предпочтительный способ связи</option>
+              <option value="Telegram">Telegram</option>
+              <option value="Телефон">Телефон</option>
+              <option value="WhatsApp">WhatsApp</option>
+            </select>
+          </div>
 
-        <button id="openMainBotBtn">
-          Открыть @otgmusicbot
-        </button>
+          <div class="result-card">
+            <h3>Параметры песни</h3>
+            <p>Опиши заказ максимально подробно</p>
+            <select id="orderSongType">
+              <option value="">Тип песни</option>
+              <option value="Персональная песня">Персональная песня</option>
+              <option value="Песня-поздравление">Песня-поздравление</option>
+              <option value="Love song">Love song</option>
+              <option value="Рэп / хип-хоп">Рэп / хип-хоп</option>
+              <option value="Поп">Поп</option>
+              <option value="Другое">Другое</option>
+            </select>
+            <br /><br />
+            <input id="orderOccasion" type="text" placeholder="Повод: день рождения, свадьба, подарок..." />
+            <br /><br />
+            <input id="orderMood" type="text" placeholder="Настроение / стиль: романтично, драйвово, грустно..." />
+            <br /><br />
+            <input id="orderReferences" type="text" placeholder="Референсы: исполнители / песни / стиль" />
+            <br /><br />
+            <select id="orderLanguage">
+              <option value="">Язык</option>
+              <option value="Русский">Русский</option>
+              <option value="Английский">Английский</option>
+              <option value="Латышский">Латышский</option>
+              <option value="Смешанный">Смешанный</option>
+            </select>
+            <br /><br />
+            <input id="orderDeadline" type="text" placeholder="Дедлайн: к какой дате нужна песня" />
+            <br /><br />
+            <input id="orderBudget" type="text" placeholder="Бюджет" />
+          </div>
+
+          <div class="result-card">
+            <h3>Подробное ТЗ</h3>
+            <p>Кому посвящена песня, что важно упомянуть, какие эмоции и детали добавить</p>
+            <textarea id="orderDetails" rows="8" placeholder="Подробно опиши заказ *"></textarea>
+            <br /><br />
+            <button class="primary-btn" id="orderSubmitBtn" type="submit">Отправить заказ менеджеру</button>
+            <br /><br />
+            <div class="status-box" id="orderStatus">Заполни форму и нажми “Отправить заказ менеджеру”.</div>
+          </div>
+
+          <div class="result-card">
+            <h3>Быстрый переход</h3>
+            <p>Если хочешь, можешь сразу открыть основного бота</p>
+            <button class="primary-btn" id="openMainBotBtn" type="button">Открыть @otgmusicbot</button>
+          </div>
+        </form>
       </section>
-
     </main>
   </div>
 
